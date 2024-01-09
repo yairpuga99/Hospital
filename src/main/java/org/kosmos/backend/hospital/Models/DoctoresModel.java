@@ -18,7 +18,7 @@ import lombok.Setter;
 public class DoctoresModel {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "doctores_sequence")
-    private long doctor_id;
+    private long doctorId;
     @NotNull
     private String strNombre;
     @NotNull

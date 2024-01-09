@@ -19,4 +19,9 @@ public interface CitasRepository extends JpaRepository<CitasModel, Long> {
 
     List<CitasModel> findByStrHora(String strHora);
 
+    List<CitasModel> findByDoctor_DoctorId(Long doctorId);
+
+    List<CitasModel> findByStrFecha(String strFecha);
+
+    List<CitasModel> findByStrFechaAndDoctor_DoctorId(String strFecha, Long doctorId);
 }

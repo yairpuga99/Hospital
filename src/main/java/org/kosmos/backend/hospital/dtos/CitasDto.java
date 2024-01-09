@@ -11,6 +11,7 @@ public class CitasDto {
     private Long cita_id;
     private DoctoresModel doctor;
     private ConsultoriosModel consultorio;
+    private String strFecha;
     private String strHora;
     private String strPaciente;
 }

@@ -14,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "citas")
+@Table(name = "cita")
 public class CitasModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,8 @@ public class CitasModel {
     @ManyToOne
     @JoinColumn(name = "consultorio_id")
     private ConsultoriosModel consultorio;
+    @NotNull
+    private String strFecha;
     @NotNull
     private String strHora;
     @NotNull

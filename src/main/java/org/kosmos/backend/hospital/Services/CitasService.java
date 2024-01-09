@@ -111,7 +111,56 @@ public class CitasService {
 
     public List<CitasDto> getCitasPorHora(String strHora) {
         List<CitasModel> citasPorHora = repository.findByStrHora(strHora);
+    
+        if (citasPorHora.isEmpty()) {
+            throw new CitaNotFoundException("No se encontraron citas para la hora proporcionada");
+        }
+    
         return citasPorHora.stream().map(mapper::toDto).toList();
     }
+
+    public List<CitasDto> getCitasPorDoctorId(Long doctor_id) {
+        List<CitasModel> citasPorDoctor = repository.findByDoctor_DoctorId(doctor_id);
+    
+        if (citasPorDoctor.isEmpty()) {
+            throw new CitaNotFoundException("No se encontraron citas para el doctor proporcionado");
+        }
+    
+        return citasPorDoctor.stream().map(mapper::toDto).toList();
+    }
+
+    public List<CitasDto> getCitasPorFecha(String strFecha) {
+        List<CitasModel> citasPorFecha = repository.findByStrFecha(strFecha);
+    
+        if (citasPorFecha.isEmpty()) {
+            throw new CitaNotFoundException("No se encontraron citas para la fecha proporcionada");
+        }
+    
+        return citasPorFecha.stream().map(mapper::toDto).toList();
+    }
+
+    public List<CitasDto> getCitaPorDoctorYFecha(String strFecha, Long doctor_id) {
+        List<CitasModel> citasPorFecha = repository.findByStrFechaAndDoctor_DoctorId(strFecha, doctor_id);
+    
+        if (citasPorFecha.isEmpty()) {
+            throw new CitaNotFoundException("No se encontraron citas para la fecha y el doctor proporcionados");
+        }
+    
+        return citasPorFecha.stream().map(mapper::toDto).toList();
+    }
+
+    public CitasDto editarCita(Long cita_id, CitasDto citaDto) throws CitaNotFoundException {
+        CitasModel citaExistente = repository.findById(cita_id)
+                .orElseThrow(() -> new CitaNotFoundException("Cita no encontrada con ID: " + cita_id));
+
+        citaExistente.setStrFecha(citaDto.getStrFecha());
+        citaExistente.setStrHora(citaDto.getStrHora());
+        citaExistente.setStrPaciente(citaDto.getStrPaciente());
+    
+        CitasModel citaActualizada = repository.save(citaExistente);
+    
+        return mapper.toDto(citaActualizada);
+    }
+
 
 }

@@ -12,6 +12,6 @@ public interface DoctoresMapper {
 
     DoctoresDto toDto(DoctoresModel model);
 
-    @Mapping(target = "doctor_id", ignore = true)
+    @Mapping(target = "doctorId", ignore = true)
     DoctoresModel toModel(CreateNewDoctorDto dto);
 }

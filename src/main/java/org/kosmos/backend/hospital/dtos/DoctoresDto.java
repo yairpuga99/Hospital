@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class DoctoresDto {
-    private long doctor_id;
+    private long doctorId;
     private String strNombre;
     private String strPaterno;
     private String strMaterno;

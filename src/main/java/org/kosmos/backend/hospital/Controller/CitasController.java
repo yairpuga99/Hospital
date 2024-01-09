@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -51,6 +52,24 @@ public class CitasController {
         return service.getCitasPorHora(strHora);
     }
 
+    @GetMapping("/doctor/{doctor_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CitasDto>findByDoctor(@PathVariable Long doctor_id){
+        return service.getCitasPorDoctorId(doctor_id);
+    }
+
+    @GetMapping("/fecha/{strFecha}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CitasDto>findByFecha(@PathVariable String strFecha){
+        return service.getCitasPorFecha(strFecha);
+    }
+
+    @GetMapping("doctor/{doctor_id}/fecha/{strFecha}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<CitasDto>findByDoctorAndFecha(@PathVariable String strFecha, @PathVariable Long doctor_id){
+        return service.getCitaPorDoctorYFecha(strFecha, doctor_id);
+    }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -69,5 +88,16 @@ public class CitasController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error interno del servidor");
         }
     }
+
+    @PutMapping("/editar/{cita_id}")
+    public ResponseEntity<CitasDto> editCita(@PathVariable Long cita_id, @RequestBody CitasDto citaDto) {
+        try {
+            CitasDto citaEditada = service.editarCita(cita_id, citaDto);
+            return ResponseEntity.ok(citaEditada);
+        } catch (CitaNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
     
 }

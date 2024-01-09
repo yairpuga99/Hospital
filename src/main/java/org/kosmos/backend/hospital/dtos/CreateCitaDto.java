@@ -6,6 +6,7 @@ import lombok.Data;
 public class CreateCitaDto {
     private Long doctor_id;
     private Long consultorio_id;
+    private String strFecha;
     private String strHora;
     private String strPaciente;
 }
